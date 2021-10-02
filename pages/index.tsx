@@ -2,20 +2,38 @@ import { Image } from "@chakra-ui/image";
 import { Box, Center, Flex, Heading, Text } from "@chakra-ui/layout";
 import React, { useState } from "react";
 import logoImage from '../images/logo.png';
-import {FaSearch} from 'react-icons/fa';
+import {FaAlignCenter, FaSearch} from 'react-icons/fa';
 import {AiFillStar} from 'react-icons/Ai'
+import {IoMdPin} from 'react-icons/Io'
 import stays from "../stays.json";
 import { AspectRatio, Button } from "@chakra-ui/react"
 import { elementDragControls } from "framer-motion/types/gestures/drag/VisualElementDragControls";
 
 const IndexPage = () => {
   const [showSearch, setShowSearch] = useState("none");
+  const [showCityChoice, setShowCityChoice] = useState("none");
+  const [showGuest, setShowGuest] = useState("none");
+  const [numAdults, setNumAdults] = useState(0);
+  const [numKids, setNumKids] = useState(0);
   const showSuper = false;
   const toolBarProps = {
     h: "100%",
     w: "100%",
-    borderRadius: "15px"
-    
+    borderRadius: "15px",
+    display: "block",
+    bg: "none"
+  }
+  const cityChoiceProps = {
+    leftIcon: <IoMdPin/>,
+    mt: "30px",
+    ml: "30px",
+    bg: "none",
+  }
+  const btnCounterProps={
+    bg: "none",
+    border: "1px solid black",
+    size: "sm",
+    p: "5px"
   }
   var superHost, num_beds;
 
@@ -75,7 +93,7 @@ const IndexPage = () => {
       // display={showSearch} 
       p="0 10%"
       pt="3%"
-      display="flex"
+      display="block"
       position="fixed"
       w="100%"
       top="0"
@@ -84,11 +102,51 @@ const IndexPage = () => {
       opacity="100%"
       bg="white"
     >
-      <Center justifyContent="space-between" border="1px solid black" w="100%" h="15%">
-        <Button {...toolBarProps}>Location</Button>
-        <Button {...toolBarProps}>Guests</Button>
-        <Button {...toolBarProps}>Search</Button>
+      <Center justifyContent="space-between" w="100%" h="15%" border="1px solid black" borderRadius="15px">
+        <Button 
+          {...toolBarProps} 
+          onClick={()=>{
+            setShowCityChoice("inline-block")
+            setShowGuest("none")
+          }}
+        >
+          <Text fontSize="sm">Location</Text>
+          <Text>Helsinki, Finland</Text>
+        </Button>
+        <Button 
+          {...toolBarProps} 
+          onClick={()=>{
+            setShowCityChoice("none")
+            setShowGuest("inline-block")
+          }}
+        >
+          <Text fontSize="sm">Guests</Text>
+          <Text>Add guests</Text>
+        </Button>
+        <Button {...toolBarProps} bg="red" leftIcon={<FaSearch/>} colorScheme="red">Search</Button>
       </Center>
+      <Box display={showCityChoice} w="300px">
+        <Button {...cityChoiceProps}>Helsinki, Finland</Button>
+        <Button {...cityChoiceProps}>Turku, Finland</Button>
+        <Button {...cityChoiceProps}>Oulu, Finland</Button>
+        <Button {...cityChoiceProps}>Vaasa, Finland</Button>
+      </Box>
+      <Box display={showGuest} ml="35%" w="300px">
+        <Text fontWeight="bold" mt="30px">Adults</Text>
+        <Text mb="10px">Ages 13 or above</Text>
+        <Flex>
+          <Button {...btnCounterProps} onClick={()=>{setNumAdults(numAdults-1)}}>-</Button>
+          <Text p="0 15px" fontWeight="bold">{numAdults}</Text>
+          <Button {...btnCounterProps} onClick={()=>{setNumAdults(numAdults+1)}}>+</Button>
+        </Flex>
+        <Text fontWeight="bold" mt="30px">Children</Text>
+        <Text mb="10px">Ages 2-12</Text>
+        <Flex>
+          <Button {...btnCounterProps} onClick={()=>{setNumKids(numKids-1)}}>-</Button>
+          <Text p="0 15px" fontWeight="bold">{numKids}</Text>
+          <Button {...btnCounterProps} onClick={()=>{setNumKids(numKids+1)}}>+</Button>
+        </Flex>
+      </Box>
     </Box>
     
     {/* {showSearch && (

@@ -77,8 +77,8 @@ const IndexPage = () => {
     <Box 
       w="100%" 
       h="100%" 
-      // display={showSearch}
-      display="flex" 
+      display={showSearch}
+      // display="flex" 
       position="fixed"
       top="0"
       left="0"
@@ -90,10 +90,10 @@ const IndexPage = () => {
     </Box>
     <Box 
       h="45%" 
-      // display={showSearch} 
+      display={showSearch} 
+      // display="block"
       p="0 10%"
       pt="3%"
-      display="block"
       position="fixed"
       w="100%"
       top="0"
@@ -160,7 +160,7 @@ const IndexPage = () => {
           <Image w="100%" h="100%" src={logoImage.src}></Image>
         </Box>
         <Flex 
-          onClick={()=> setShowSearch("flex")} 
+          onClick={()=> setShowSearch("block")} 
           _hover={{cursor: "pointer"}} 
           // border="1px solid black" 
           shadow="md"
